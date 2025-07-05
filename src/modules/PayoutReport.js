@@ -5,13 +5,30 @@ class PayoutReport{
         this.startDate = $("#payout-report--start-date");
         this.endDate = $("#payout-report--end-date");
         this.generateButton = $('#tomc-payout-report--generate-button');
+        this.startDateError = $('#payout-report--start-date-error');
+        this.endDateError = $('#payout-report--end-date-error');
         this.events();
     }
     events(){             
         this.generateButton.on('click', this.generate.bind(this));
     }
     generate(){
-        console.log('start date: ' + this.startDate.val());
+        if (this.startDate.val() != '' && this.endDate.val() != ''){
+            this.startDateError.addClass('hidden');
+            this.endDateError.addClass('hidden');
+            console.log('good to go');
+        } else {
+            if (this.startDate.val() == ''){
+                this.startDateError.removeClass('hidden');
+            } else {
+                this.startDateError.addClass('hidden');
+            }
+            if (this.endDate.val() == ''){
+                this.endDateError.removeClass('hidden');
+            } else {
+                this.endDateError.addClass('hidden');
+            }
+        }
     }
 }
 

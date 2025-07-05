@@ -20,7 +20,8 @@ if (is_user_logged_in()){
                 <input type="date" id="payout-report--start-date" />
                 <label for="payout-report--end-date" class="centered-text margin-20 block">end date: </label>
                 <input type="date" id="payout-report--end-date" />
-                <p id="payout-report--error-message" class="invisible centered-text">Enter a start and end date.</p>
+                <p id="payout-report--start-date-error" class="hidden centered-text red-text">Choose a start date.</p>
+                <p id="payout-report--end-date-error" class="hidden centered-text red-text">Choose an end date.</p>
                 <button id="tomc-payout-report--generate-button" class="purple-width-fit-button">Generate</button>
             </div>
         </main>

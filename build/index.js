@@ -20,13 +20,30 @@ class PayoutReport {
     this.startDate = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#payout-report--start-date");
     this.endDate = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#payout-report--end-date");
     this.generateButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-payout-report--generate-button');
+    this.startDateError = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#payout-report--start-date-error');
+    this.endDateError = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#payout-report--end-date-error');
     this.events();
   }
   events() {
     this.generateButton.on('click', this.generate.bind(this));
   }
   generate() {
-    console.log('start date: ' + this.startDate.val());
+    if (this.startDate.val() != '' && this.endDate.val() != '') {
+      this.startDateError.addClass('hidden');
+      this.endDateError.addClass('hidden');
+      console.log('good to go');
+    } else {
+      if (this.startDate.val() == '') {
+        this.startDateError.removeClass('hidden');
+      } else {
+        this.startDateError.addClass('hidden');
+      }
+      if (this.endDate.val() == '') {
+        this.endDateError.removeClass('hidden');
+      } else {
+        this.endDateError.addClass('hidden');
+      }
+    }
   }
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PayoutReport);
