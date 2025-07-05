@@ -22,6 +22,7 @@ class PayoutReport {
     this.generateButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-payout-report--generate-button');
     this.startDateError = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#payout-report--start-date-error');
     this.endDateError = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#payout-report--end-date-error');
+    this.dateOrderError = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#payout-report--dates-error');
     this.events();
   }
   events() {
@@ -31,7 +32,12 @@ class PayoutReport {
     if (this.startDate.val() != '' && this.endDate.val() != '') {
       this.startDateError.addClass('hidden');
       this.endDateError.addClass('hidden');
-      console.log('good to go');
+      if (this.endDate.val() > this.startDate.val()) {
+        this.dateOrderError.addClass('hidden');
+        console.log('good to go');
+      } else {
+        this.dateOrderError.removeClass('hidden');
+      }
     } else {
       if (this.startDate.val() == '') {
         this.startDateError.removeClass('hidden');

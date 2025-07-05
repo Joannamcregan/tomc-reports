@@ -7,7 +7,7 @@
 */
 
 if( ! defined('ABSPATH') ) exit;
-// require_once plugin_dir_path(__FILE__) . 'inc/tomc-reporting-route.php';
+require_once plugin_dir_path(__FILE__) . 'inc/tomc-reporting-route.php';
 
 class TOMCReportsPlugin {
     function __construct() {

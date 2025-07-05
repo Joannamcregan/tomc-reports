@@ -1,12 +1,4 @@
 <?php global $wpdb;         
-$orders_table = $wpdb->prefix . "wc_orders";
-$order_items_table = $wpdb->prefix . "woocommerce_order_items";
-$order_product_lookup_table = $wpdb->prefix . "wc_order_product_lookup";
-$users_table = $wpdb->prefix . "users";
-$user_meta_table = $wpdb->prefix . "usermeta";
-$posts_table = $wpdb->prefix . "posts";
-$item_meta_table = $wpdb->prefix . "woocommerce_order_itemmeta";
-$order_meta_table = $wpdb->prefix . "wc_orders_meta";
 $userid = get_current_user_id();
 $user = wp_get_current_user();
 
@@ -22,6 +14,7 @@ if (is_user_logged_in()){
                 <input type="date" id="payout-report--end-date" />
                 <p id="payout-report--start-date-error" class="hidden centered-text red-text">Choose a start date.</p>
                 <p id="payout-report--end-date-error" class="hidden centered-text red-text">Choose an end date.</p>
+                <p id="payout-report--dates-error" class="hidden centered-text red-text">The end date must be later than the start date.</p>
                 <button id="tomc-payout-report--generate-button" class="purple-width-fit-button">Generate</button>
             </div>
         </main>

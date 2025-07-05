@@ -7,6 +7,7 @@ class PayoutReport{
         this.generateButton = $('#tomc-payout-report--generate-button');
         this.startDateError = $('#payout-report--start-date-error');
         this.endDateError = $('#payout-report--end-date-error');
+        this.dateOrderError = $('#payout-report--dates-error');
         this.events();
     }
     events(){             
@@ -16,7 +17,12 @@ class PayoutReport{
         if (this.startDate.val() != '' && this.endDate.val() != ''){
             this.startDateError.addClass('hidden');
             this.endDateError.addClass('hidden');
-            console.log('good to go');
+            if (this.endDate.val() > this.startDate.val()){
+                this.dateOrderError.addClass('hidden');
+                console.log('good to go');
+            } else {
+                this.dateOrderError.removeClass('hidden');
+            }
         } else {
             if (this.startDate.val() == ''){
                 this.startDateError.removeClass('hidden');
