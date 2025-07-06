@@ -53,16 +53,16 @@ class PayoutReport{
                         for (let i = 0; i < response.length; i++){
                             row = $('<tr />');
                             let td = $('<td />');
-                            td.text(response[i]['total_revenue'].toFixed(2));
+                            td.text(Math.round(response[i]['total_revenue'] * 100) / 100);
                             row.append(td);
                             td = $('<td />');
-                            td.text(response[i]['total_revenue'].toFixed(2));
+                            td.text(response[i]['total_revenue']);
                             row.append(td);
                             td = $('<td />');
-                            td.text(response[i]['stripe_fees'].toFixed(2));
+                            td.text(response[i]['stripe_fees']);
                             row.append(td);
                             td = $('<td />');
-                            td.text(response[i]['commission'].toFixed(2));
+                            td.text(response[i]['commission']);
                             row.append(td);
                             table.append(row);
                         }
