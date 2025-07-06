@@ -28,23 +28,43 @@ class PayoutReport {
   events() {
     this.generateButton.on('click', this.generate.bind(this));
   }
-  generate() {
-    if (this.startDate.val() != '' && this.endDate.val() != '') {
+  generate(e) {
+    let startDate = this.startDate.val();
+    let endDate = this.endDate.val();
+    if (startDate != '' && endDate != '') {
       this.startDateError.addClass('hidden');
       this.endDateError.addClass('hidden');
-      if (this.endDate.val() > this.startDate.val()) {
+      if (endDate > startDate) {
         this.dateOrderError.addClass('hidden');
-        console.log('good to go');
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
+        jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+          beforeSend: xhr => {
+            xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+          },
+          url: tomcBookorgData.root_url + '/wp-json/tomcReports/v1/getPayoutRecords',
+          type: 'GET',
+          data: {
+            'startDate': startDate,
+            'endDate': endDate
+          },
+          success: response => {
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
+            console.log(response);
+          },
+          error: response => {
+            console.log(response);
+          }
+        });
       } else {
         this.dateOrderError.removeClass('hidden');
       }
     } else {
-      if (this.startDate.val() == '') {
+      if (startDate == '') {
         this.startDateError.removeClass('hidden');
       } else {
         this.startDateError.addClass('hidden');
       }
-      if (this.endDate.val() == '') {
+      if (endDate == '') {
         this.endDateError.removeClass('hidden');
       } else {
         this.endDateError.addClass('hidden');
