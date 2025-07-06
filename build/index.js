@@ -23,6 +23,7 @@ class PayoutReport {
     this.startDateError = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#payout-report--start-date-error');
     this.endDateError = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#payout-report--end-date-error');
     this.dateOrderError = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#payout-report--dates-error');
+    this.resultsSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-payout-report--results-section');
     this.events();
   }
   events() {
@@ -49,7 +50,38 @@ class PayoutReport {
           },
           success: response => {
             jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
-            console.log(response);
+            let table = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<table />');
+            let row = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<tr />');
+            let heading = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<th />');
+            heading.text('Display Name');
+            row.append(heading);
+            heading = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<th />');
+            heading.text('Total Revenue');
+            row.append(heading);
+            heading = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<th />');
+            heading.text('Stripe Fees');
+            row.append(heading);
+            heading = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<th />');
+            heading.text('Commission');
+            row.append(heading);
+            table.append(row);
+            for (let i = 0; i < response.length; i++) {
+              row = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<tr />');
+              let td = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<td />');
+              td.text(response[i]['total_revenue']);
+              row.append(td);
+              td = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<td />');
+              td.text(response[i]['total_revenue']);
+              row.append(td);
+              td = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<td />');
+              td.text(response[i]['stripe_fees']);
+              row.append(td);
+              td = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<td />');
+              td.text(response[i]['commission']);
+              row.append(td);
+              table.append(row);
+            }
+            this.resultsSection.append(table);
           },
           error: response => {
             console.log(response);

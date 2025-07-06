@@ -16,6 +16,7 @@ if (is_user_logged_in()){
                 <p id="payout-report--end-date-error" class="hidden centered-text red-text">Choose an end date.</p>
                 <p id="payout-report--dates-error" class="hidden centered-text red-text">The end date must be later than the start date.</p>
                 <button id="tomc-payout-report--generate-button" class="purple-width-fit-button">Generate</button>
+                <div id="tomc-payout-report--results-section" class="tomc-report--result-section"></div>
             </div>
         </main>
     <?php } else {

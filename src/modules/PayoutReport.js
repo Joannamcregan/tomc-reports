@@ -8,6 +8,7 @@ class PayoutReport{
         this.startDateError = $('#payout-report--start-date-error');
         this.endDateError = $('#payout-report--end-date-error');
         this.dateOrderError = $('#payout-report--dates-error');
+        this.resultsSection = $('#tomc-payout-report--results-section');
         this.events();
     }
     events(){             
@@ -34,7 +35,38 @@ class PayoutReport{
                     },
                     success: (response) => {
                         $(e.target).removeClass('contracting');
-                        console.log(response);
+                        let table = $('<table />');
+                        let row = $('<tr />');
+                        let heading = $('<th />');
+                        heading.text('Display Name');
+                        row.append(heading);
+                        heading = $('<th />');
+                        heading.text('Total Revenue');
+                        row.append(heading);
+                        heading = $('<th />');
+                        heading.text('Stripe Fees');
+                        row.append(heading);
+                        heading = $('<th />');
+                        heading.text('Commission');
+                        row.append(heading);
+                        table.append(row);
+                        for (let i = 0; i < response.length; i++){
+                            row = $('<tr />');
+                            let td = $('<td />');
+                            td.text(response[i]['total_revenue']);
+                            row.append(td);
+                            td = $('<td />');
+                            td.text(response[i]['total_revenue']);
+                            row.append(td);
+                            td = $('<td />');
+                            td.text(response[i]['stripe_fees']);
+                            row.append(td);
+                            td = $('<td />');
+                            td.text(response[i]['commission']);
+                            row.append(td);
+                            table.append(row);
+                        }
+                        this.resultsSection.append(table);
                     },
                     error: (response) => {
                         console.log(response);
