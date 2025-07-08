@@ -6,7 +6,7 @@ get_header();
 if (is_user_logged_in()){
     if (in_array( 'administrator', (array) $user->roles ) ){
         ?><main>
-            <div class="report-section">
+            <div class="report-section two-thirds-screen">
                 <h1 class="centered-text margin-20">Payout Report</h1>
                 <label for="payout-report--start-date" class="centered-text margin-20 block">start date: </label>
                 <input type="date" id="payout-report--start-date" />
@@ -21,7 +21,9 @@ if (is_user_logged_in()){
         </main>
     <?php } else {
         ?><main>
-            <p class="centered-text half-screen">Only admin can access this report. If you're an author looking for your personal this report, please contact us by email.</p>
+            <div class="two-thirds-screen">
+                <p class="centered-text half-screen">Only admin can access this report. If you're an author looking for your personal this report, please contact us by email.</p>
+            </div>
         </main>
     <?php }
 } else {
