@@ -24,7 +24,7 @@ function getPayoutRecords($data){
         $order_meta_table = $wpdb->prefix . "wc_orders_meta";
         $userId = $user->ID;
         // $query = 'select users.display_name, sum(line_total.meta_value) as total_revenue, sum(stripe.meta_value) as stripe_fees, ((sum(line_total.meta_value) - sum(stripe.meta_value)) * (um.meta_value / 100)) as commission
-        $query = 'select users.display_name, sum(line_total.meta_value) as total_revenue, stripe.meta_value as stripe_fees, ((sum(line_total.meta_value) - stripe.meta_value * (um.meta_value / 100)) as commission
+        $query = 'select users.display_name, line_total.meta_value as total_revenue, stripe.meta_value as stripe_fees, 0 as commission
         from %i completed 
         join %i items on completed.id = items.order_id
         and completed.status = "wc-completed"
@@ -39,8 +39,8 @@ function getPayoutRecords($data){
         join %i um on users.id = um.user_id
         and um.meta_key = "_vendor_commission"
         where completed.date_created_gmt >= %s
-        and completed.date_created_gmt <= %s
-        group by users.display_name, um.meta_value;';
+        and completed.date_created_gmt <= %s';
+        // group by users.display_name, um.meta_value;';
         $results = $wpdb->get_results($wpdb->prepare($query, $orders_table, $order_items_table, $order_product_lookup_table, $posts_table, $users_table, $item_meta_table, $order_meta_table, $user_meta_table, $startDate, $endDate), ARRAY_A);
         return $results;
         // return $wpdb->prepare($query, $orders_table, $order_items_table, $order_product_lookup_table, $posts_table, $users_table, $item_meta_table, $order_meta_table, $user_meta_table, $startDate, $endDate);
