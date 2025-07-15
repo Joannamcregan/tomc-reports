@@ -49,6 +49,7 @@ class PayoutReport {
             'endDate': endDate
           },
           success: response => {
+            this.resultsSection.html('');
             jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
             let table = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<table />');
             let row = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<tr />');
@@ -84,7 +85,11 @@ class PayoutReport {
             this.resultsSection.append(table);
           },
           error: response => {
-            console.log(response);
+            this.resultsSection.html('');
+            let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />');
+            p.text('Unfortunately an error occurred. Please try again later.');
+            p.addClass('centered-text');
+            this.resultsSection.append(p);
           }
         });
       } else {

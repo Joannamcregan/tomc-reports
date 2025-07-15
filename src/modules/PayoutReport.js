@@ -34,6 +34,7 @@ class PayoutReport{
                         'endDate' : endDate
                     },
                     success: (response) => {
+                        this.resultsSection.html('');
                         $(e.target).removeClass('contracting');
                         let table = $('<table />');
                         let row = $('<tr />');
@@ -69,7 +70,11 @@ class PayoutReport{
                         this.resultsSection.append(table);
                     },
                     error: (response) => {
-                        console.log(response);
+                        this.resultsSection.html('');
+                        let p = $('<p />');
+                        p.text('Unfortunately an error occurred. Please try again later.');
+                        p.addClass('centered-text');
+                        this.resultsSection.append(p);
                     }
                 })
             } else {
