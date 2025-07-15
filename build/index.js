@@ -68,7 +68,7 @@ class PayoutReport {
             for (let i = 0; i < response.length; i++) {
               row = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<tr />');
               let td = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<td />');
-              td.text(Math.round(response[i]['total_revenue'] * 100) / 100);
+              td.text(response[i]['display_name']);
               row.append(td);
               td = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<td />');
               td.text(Math.round(response[i]['total_revenue'] * 100) / 100);

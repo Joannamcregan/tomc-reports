@@ -53,7 +53,7 @@ class PayoutReport{
                         for (let i = 0; i < response.length; i++){
                             row = $('<tr />');
                             let td = $('<td />');
-                            td.text(Math.round(response[i]['total_revenue'] * 100) / 100);
+                            td.text(response[i]['display_name']);
                             row.append(td);
                             td = $('<td />');
                             td.text(Math.round(response[i]['total_revenue'] * 100) / 100);
