@@ -22,13 +22,15 @@ if (is_user_logged_in()){
     <?php } else {
         ?><main>
             <div class="two-thirds-screen">
-                <p class="centered-text half-screen">Only admin can access this report. If you're an author looking for your personal this report, please contact us by email.</p>
+                <p class="centered-text">Only logged-in admin can access this report.</p>
             </div>
         </main>
     <?php }
 } else {
     ?><main>
-        <p class="centered-text">Only logged in admin can access this report.</p>
+        <div class="two-thirds-screen">
+            <p class="centered-text">Only logged-in admin can access this report.</p>
+        </div>
     </main>
 <?php }
 get_footer();

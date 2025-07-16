@@ -34,6 +34,7 @@ class PayoutReport{
                         'endDate' : endDate
                     },
                     success: (response) => {
+                        console.log(response);
                         this.resultsSection.html('');
                         $(e.target).removeClass('contracting');
                         let table = $('<table />');

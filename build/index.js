@@ -49,6 +49,7 @@ class PayoutReport {
             'endDate': endDate
           },
           success: response => {
+            console.log(response);
             this.resultsSection.html('');
             jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
             let table = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<table />');
