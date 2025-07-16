@@ -41,11 +41,28 @@ function getPayoutRecords($data){
             where completed.date_created_gmt >= %s
             and completed.date_created_gmt <= %s
             group by completed.id
+        ),
+        CTE1 AS (
+            select completed.id as cte1_order_id, (line_total.meta_value / cte_order_cost) as cte1_percent_order_cost
+            from %i completed 
+            join CTE on completed.id = CTE.cte_order_id
+            join %i items on completed.id = items.order_id
+            and completed.status = "wc-completed"
+            and items.order_item_type = "line_item"
+            join %i l on l.order_item_id = items.order_item_id
+            join %i posts on l.product_id = posts.id
+            join %i users on posts.post_author = users.id
+            join %i line_total on items.order_item_id = line_total.order_item_id
+            and line_total.meta_key = "_line_total"
+            join %i stripe on completed.id = stripe.order_id
+            and stripe.meta_key = "_stripe_fee"
+            where completed.date_created_gmt >= %s
+            and completed.date_created_gmt <= %s
         )
-        select users.display_name, sum(line_total.meta_value) as total_revenue, sum(stripe.meta_value) as stripe_fees, ((sum(line_total.meta_value) - sum(stripe.meta_value)) * (um.meta_value / 100)) as commission, CTE.cte_order_id, (line_total.meta_value / CTE.cte_order_cost) as stripe_percent
+        select users.display_name, sum(line_total.meta_value) as total_revenue, sum(stripe.meta_value) as stripe_fees, ((sum(line_total.meta_value) - sum(stripe.meta_value)) * (um.meta_value / 100)) as commission, CTE1.cte1_order_id, cte1_percent_order_cost
         from %i completed 
 
-        join CTE on completed.id = CTE.cte_order_id
+        join CTE1 on completed.id = CTE1.cte1_order_id
 
         join %i items on completed.id = items.order_id
         and completed.status = "wc-completed"
@@ -61,7 +78,7 @@ function getPayoutRecords($data){
         and um.meta_key = "_vendor_commission"
         where completed.date_created_gmt >= %s
         and completed.date_created_gmt <= %s
-        group by users.display_name, um.meta_value, CTE.cte_order_id, CTE.cte_order_cost;';
+        group by users.display_name, um.meta_value, CTE1.cte1_order_id, cte1_percent_order_cost;';
         // $results = $wpdb->get_results($wpdb->prepare($query, $orders_table, $order_items_table, $order_product_lookup_table, $posts_table, $users_table, $item_meta_table, $order_meta_table, $user_meta_table, $startDate, $endDate), ARRAY_A);
         $results = $wpdb->get_results($wpdb->prepare($query, $orders_table, $order_items_table, $order_product_lookup_table, $posts_table, $users_table, $item_meta_table, $order_meta_table, $startDate, $endDate, $orders_table, $order_items_table, $order_product_lookup_table, $posts_table, $users_table, $item_meta_table, $order_meta_table, $user_meta_table, $startDate, $endDate), ARRAY_A);
         // return $results;
