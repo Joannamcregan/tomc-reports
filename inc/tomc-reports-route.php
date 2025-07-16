@@ -42,7 +42,7 @@ function getPayoutRecords($data){
             and completed.date_created_gmt <= %s
             group by completed.id
         )
-        select users.display_name, sum(line_total.meta_value) as total_revenue, sum(stripe.meta_value) as stripe_fees, ((sum(line_total.meta_value) - sum(stripe.meta_value)) * (um.meta_value / 100)) as commission, CTE.cte_order_id, CTE.cte_order_cost
+        select users.display_name, sum(line_total.meta_value) as total_revenue, sum(stripe.meta_value) as stripe_fees, ((sum(line_total.meta_value) - sum(stripe.meta_value)) * (um.meta_value / 100)) as commission, CTE.cte_order_id, (line_total.meta_value / CTE.cte_order_cost) as stripe_percent
         from %i completed 
 
         join CTE on completed.id = CTE.cte_order_id
