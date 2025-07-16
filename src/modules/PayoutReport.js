@@ -37,38 +37,38 @@ class PayoutReport{
                         console.log(response);
                         this.resultsSection.html('');
                         $(e.target).removeClass('contracting');
-                        let table = $('<table />');
-                        let row = $('<tr />');
-                        let heading = $('<th />');
-                        heading.text('Display Name');
-                        row.append(heading);
-                        heading = $('<th />');
-                        heading.text('Total Revenue');
-                        row.append(heading);
-                        heading = $('<th />');
-                        heading.text('Stripe Fees');
-                        row.append(heading);
-                        heading = $('<th />');
-                        heading.text('Commission');
-                        row.append(heading);
-                        table.append(row);
-                        for (let i = 0; i < response.length; i++){
-                            row = $('<tr />');
-                            let td = $('<td />');
-                            td.text(response[i]['display_name']);
-                            row.append(td);
-                            td = $('<td />');
-                            td.text(Math.round(response[i]['total_revenue'] * 100) / 100);
-                            row.append(td);
-                            td = $('<td />');
-                            td.text(Math.round(response[i]['stripe_fees'] * 100) / 100);
-                            row.append(td);
-                            td = $('<td />');
-                            td.text(Math.round(response[i]['commission'] * 100) / 100);
-                            row.append(td);
-                            table.append(row);
-                        }
-                        this.resultsSection.append(table);
+                        // let table = $('<table />');
+                        // let row = $('<tr />');
+                        // let heading = $('<th />');
+                        // heading.text('Display Name');
+                        // row.append(heading);
+                        // heading = $('<th />');
+                        // heading.text('Total Revenue');
+                        // row.append(heading);
+                        // heading = $('<th />');
+                        // heading.text('Stripe Fees');
+                        // row.append(heading);
+                        // heading = $('<th />');
+                        // heading.text('Commission');
+                        // row.append(heading);
+                        // table.append(row);
+                        // for (let i = 0; i < response.length; i++){
+                        //     row = $('<tr />');
+                        //     let td = $('<td />');
+                        //     td.text(response[i]['display_name']);
+                        //     row.append(td);
+                        //     td = $('<td />');
+                        //     td.text(Math.round(response[i]['total_revenue'] * 100) / 100);
+                        //     row.append(td);
+                        //     td = $('<td />');
+                        //     td.text(Math.round(response[i]['stripe_fees'] * 100) / 100);
+                        //     row.append(td);
+                        //     td = $('<td />');
+                        //     td.text(Math.round(response[i]['commission'] * 100) / 100);
+                        //     row.append(td);
+                        //     table.append(row);
+                        // }
+                        // this.resultsSection.append(table);
                     },
                     error: (response) => {
                         this.resultsSection.html('');
