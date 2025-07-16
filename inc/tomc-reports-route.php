@@ -44,6 +44,9 @@ function getPayoutRecords($data){
         )
         select users.display_name, sum(line_total.meta_value) as total_revenue, sum(stripe.meta_value) as stripe_fees, ((sum(line_total.meta_value) - sum(stripe.meta_value)) * (um.meta_value / 100)) as commission, CTE.cte_order_id, CTE.cte_order_cost
         from %i completed 
+
+        join CTE on completed.id = CTE.cte_order_id
+
         join %i items on completed.id = items.order_id
         and completed.status = "wc-completed"
         and items.order_item_type = "line_item"
