@@ -64,7 +64,7 @@ function getPayoutRecords($data){
         join %i items on completed.id = items.order_id
         and completed.status = "wc-completed"
         and items.order_item_type = "line_item"
-        join CTE1 on completed.id = CTE1.cte1_order_id
+        join CTE1 on items.order_item_id = CTE1.cte1_item_id
         join %i l on l.order_item_id = items.order_item_id
         join %i posts on l.product_id = posts.id
         join %i users on posts.post_author = users.id
