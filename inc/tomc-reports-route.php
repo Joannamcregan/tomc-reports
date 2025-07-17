@@ -43,7 +43,7 @@ function getPayoutRecords($data){
             group by completed.id
         ),
         CTE1 AS (
-            select items.id as cte1_item_id, (line_total.meta_value / cte_order_cost) as cte1_percent_order_cost
+            select items.order_item_id as cte1_item_id, (line_total.meta_value / cte_order_cost) as cte1_percent_order_cost
             from %i completed 
             join CTE on completed.id = CTE.cte_order_id
             join %i items on completed.id = items.order_id
