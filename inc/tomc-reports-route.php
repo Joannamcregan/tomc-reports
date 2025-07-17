@@ -60,7 +60,7 @@ function getPayoutRecords($data){
             and completed.date_created_gmt <= %s
         ),
         CTE2 AS (
-            select cte1_item_id as cte2_item_id, (stripe.meta_value * cte1.cte1_percent_order_cost) as stripe_fee
+            select cte1_item_id as cte2_item_id, (stripe.meta_value * cte1_percent_order_cost) as stripe_fee
             from %i completed 
             join %i items on completed.id = items.order_id
             and completed.status = "wc-completed"
