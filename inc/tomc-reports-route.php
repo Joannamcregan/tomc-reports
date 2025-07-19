@@ -74,7 +74,7 @@ function getPayoutRecords($data){
         join %i users on posts.post_author = users.id
         join %i line_total on items.order_item_id = line_total.order_item_id
         and line_total.meta_key = "_line_total"
-        join %i item_commission on items.order_item_id = item_commission.order_item_id
+        left join %i item_commission on items.order_item_id = item_commission.order_item_id
         and item_commission.meta_key = "_vendor_item_commission"
         where completed.date_created_gmt >= %s
         and completed.date_created_gmt <= %s
