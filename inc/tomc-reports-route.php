@@ -31,7 +31,6 @@ function getPayoutRecords($data){
             join %i child_order on completed.id = child_order.parent_order_id
             and completed.parent_order_id = 0
             and completed.status = "wc-completed"
-            and child_order.status <> "wc-refunded"
             join %i items on child_order.id = items.order_id
             and items.order_item_type = "line_item"
             join %i line_total on items.order_item_id = line_total.order_item_id
@@ -45,8 +44,6 @@ function getPayoutRecords($data){
             from %i completed
             join %i child_order on completed.id = child_order.parent_order_id
             and completed.parent_order_id = 0
-            and completed.status = "wc-completed"
-            and child_order.status <> "wc-refunded"
             join CTE on child_order.id = CTE.cte_order_id
             join %i items on child_order.id = items.order_id
             and items.order_item_type = "line_item"
@@ -61,7 +58,6 @@ function getPayoutRecords($data){
             join %i child_order on completed.id = child_order.parent_order_id
             and completed.parent_order_id = 0
             and completed.status = "wc-completed"
-            and child_order.status <> "wc-refunded"
             join %i items on child_order.id = items.order_id
             and items.order_item_type = "line_item"
             join CTE1 on items.order_item_id = CTE1.cte1_item_id
