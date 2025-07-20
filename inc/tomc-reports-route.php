@@ -28,7 +28,7 @@ function getPayoutRecords($data){
         $query = 'with CTE AS (
             select child_order.id as cte_order_id, sum(line_total.meta_value) as cte_order_cost
             from %i completed
-            join %i child_order on completed.id = child.parent_order_id
+            join %i child_order on completed.id = child_order.parent_order_id
             and completed.parent_order_id = 0
             and completed.status = "wc-completed"
             and child_order.status <> "wc-refunded"
@@ -43,7 +43,7 @@ function getPayoutRecords($data){
         CTE1 AS (
             select items.order_item_id as cte1_item_id, (line_total.meta_value / cte_order_cost) as cte1_percent_order_cost
             from %i completed
-            join %i child_order on completed.id = child.parent_order_id
+            join %i child_order on completed.id = child_order.parent_order_id
             and completed.parent_order_id = 0
             and completed.status = "wc-completed"
             and child_order.status <> "wc-refunded"
@@ -58,7 +58,7 @@ function getPayoutRecords($data){
         CTE2 AS (
             select cte1_item_id as cte2_item_id, (stripe.meta_value * cte1_percent_order_cost) as stripe_fee
             from %i completed
-            join %i child_order on completed.id = child.parent_order_id
+            join %i child_order on completed.id = child_order.parent_order_id
             and completed.parent_order_id = 0
             and completed.status = "wc-completed"
             and child_order.status <> "wc-refunded"
@@ -74,7 +74,7 @@ function getPayoutRecords($data){
         )
         select users.display_name, sum(line_total.meta_value) as total_revenue, sum(stripe_fee) as stripe_fees, sum(item_commission.meta_value) as commission
         from %i completed
-        join %i child_order on completed.id = child.parent_order_id
+        join %i child_order on completed.id = child_order.parent_order_id
         and completed.parent_order_id = 0
         and completed.status = "wc-completed"
         and child_order.status <> "wc-refunded"
