@@ -23,8 +23,9 @@ function getPayoutRecords($data){
         $item_meta_table = $wpdb->prefix . "woocommerce_order_itemmeta";
         $order_meta_table = $wpdb->prefix . "wc_orders_meta";
         $userId = $user->ID;
+        //old line 27: select child_order.id as cte_order_id, sum(line_total.meta_value) as cte_order_cost
         $query = 'with CTE AS (
-            select child_order.id as cte_order_id, sum(line_total.meta_value) as cte_order_cost
+            select completed.id as cte_order_id, sum(line_total.meta_value) as cte_order_cost
             from %i completed
             join %i child_order on completed.id = child_order.parent_order_id
             and completed.parent_order_id = 0
