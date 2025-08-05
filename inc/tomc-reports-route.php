@@ -51,7 +51,7 @@ function getPayoutRecords($data){
             and child_order.date_created_gmt <= %s
         ),
         CTE2 AS (
-            select cte1_item_id as cte2_item_id, (stripe.meta_value * cte1_percent_order_cost) as stripe_fee
+            select cte1_item_id as cte2_item_id, (stripe.meta_value * cte1_percent_order_cost) as stripe_fee, cte1_percent_order_cost
             from %i completed
             join %i child_order on completed.id = child_order.parent_order_id
             and completed.parent_order_id = 0
