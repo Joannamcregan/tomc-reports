@@ -68,7 +68,7 @@ function getPayoutRecords($data){
             where child_order.date_created_gmt >= %s
             and child_order.date_created_gmt <= %s
         )
-        select users.display_name, line_total.meta_value as total_revenue, stripe_fee as stripe_fees, sum((line_total.meta_value - stripe_fee) * (um.meta_value/100)) as commission
+        select users.display_name, line_total.meta_value as total_revenue, stripe_fee as stripe_fees
         from %i completed
         join %i child_order on completed.id = child_order.parent_order_id
         and completed.parent_order_id = 0
