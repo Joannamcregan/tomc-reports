@@ -23,8 +23,6 @@ function getPayoutRecords($data){
         $item_meta_table = $wpdb->prefix . "woocommerce_order_itemmeta";
         $order_meta_table = $wpdb->prefix . "wc_orders_meta";
         $userId = $user->ID;
-        // $query = 'select users.display_name, sum(line_total.meta_value) as total_revenue, sum(stripe.meta_value) as stripe_fees, ((sum(line_total.meta_value) - sum(stripe.meta_value)) * (um.meta_value / 100)) as commission
-        // $query = 'select users.display_name, line_total.meta_value as total_revenue, stripe.meta_value as stripe_fees, 0 as commission
         $query = 'with CTE AS (
             select child_order.id as cte_order_id, sum(line_total.meta_value) as cte_order_cost
             from %i completed
@@ -68,7 +66,7 @@ function getPayoutRecords($data){
             where child_order.date_created_gmt >= %s
             and child_order.date_created_gmt <= %s
         )
-        select users.display_name, line_total.meta_value as total_revenue, stripe_fee as stripe_fees
+        select users.display_name, line_total.meta_value as total_revenue, stripe_fee as stripe_fees, cte1_percent_order_cost
         from %i completed
         join %i child_order on completed.id = child_order.parent_order_id
         and completed.parent_order_id = 0
