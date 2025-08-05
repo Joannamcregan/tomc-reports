@@ -68,7 +68,7 @@ function getPayoutRecords($data){
             where child_order.date_created_gmt >= %s
             and child_order.date_created_gmt <= %s
         )
-        select users.display_name, sum(line_total.meta_value) as total_revenue, sum(stripe_fee) as stripe_fees, sum(item_commission.meta_value) as commission
+        select users.display_name, sum(line_total.meta_value) as total_revenue, sum(stripe_fee) as stripe_fees, sum((line_total.meta_value - stripe_fee) * (um.meta_value/100)) as commission
         from %i completed
         join %i child_order on completed.id = child_order.parent_order_id
         and completed.parent_order_id = 0
@@ -84,11 +84,13 @@ function getPayoutRecords($data){
         and line_total.meta_key = "_line_total"
         left join %i item_commission on items.order_item_id = item_commission.order_item_id
         and item_commission.meta_key = "_vendor_item_commission"
+        join %i um on users.id = um.user_id
+        and um.meta_key = "_vendor_commission"
         where child_order.date_created_gmt >= %s
         and child_order.date_created_gmt <= %s
         group by users.display_name;';
         // $results = $wpdb->get_results($wpdb->prepare($query, $orders_table, $order_items_table, $order_product_lookup_table, $posts_table, $users_table, $item_meta_table, $order_meta_table, $user_meta_table, $startDate, $endDate), ARRAY_A);
-        $results = $wpdb->get_results($wpdb->prepare($query, $orders_table, $orders_table, $order_items_table, $item_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $item_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $item_meta_table, $order_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $order_product_lookup_table, $posts_table, $users_table, $item_meta_table, $item_meta_table, $startDate, $endDate), ARRAY_A);
+        $results = $wpdb->get_results($wpdb->prepare($query, $orders_table, $orders_table, $order_items_table, $item_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $item_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $item_meta_table, $order_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $order_product_lookup_table, $posts_table, $users_table, $item_meta_table, $item_meta_table, $user_meta_table, $startDate, $endDate), ARRAY_A);
         // return $results;
         return $wpdb->prepare($query, $orders_table, $orders_table, $order_items_table, $item_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $item_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $item_meta_table, $order_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $order_product_lookup_table, $posts_table, $users_table, $item_meta_table, $item_meta_table, $startDate, $endDate);
     } else {
