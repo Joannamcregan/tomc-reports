@@ -25,7 +25,7 @@ function getPayoutRecords($data){
         $userId = $user->ID;
         //old line 33: join %i items on child_order.id = items.order_id
         $query = 'with CTE AS (
-            select child_order.id as cte_order_id, sum(line_total.meta_value) as cte_order_cost
+            select child_order.id as cte_order_id, sum(line_total.meta_value) as cte_order_cost, completed.id as completed_order_id
             from %i completed
             join %i child_order on completed.id = child_order.parent_order_id
             and completed.parent_order_id = 0
@@ -39,7 +39,7 @@ function getPayoutRecords($data){
             group by child_order.id
         ),
         CTE1 AS (
-            select items.order_item_id as cte1_item_id, (line_total.meta_value / cte_order_cost) as cte1_percent_order_cost
+            select items.order_item_id as cte1_item_id, (line_total.meta_value / cte_order_cost) as cte1_percent_order_cost, cte_order_cost, completed_order_id
             from %i completed
             join %i child_order on completed.id = child_order.parent_order_id
             and completed.parent_order_id = 0
@@ -52,7 +52,7 @@ function getPayoutRecords($data){
             and child_order.date_created_gmt <= %s
         ),
         CTE2 AS (
-            select cte1_item_id as cte2_item_id, (stripe.meta_value * cte1_percent_order_cost) as stripe_fee, cte1_percent_order_cost
+            select cte1_item_id as cte2_item_id, (stripe.meta_value * cte1_percent_order_cost) as stripe_fee, cte1_percent_order_cost, cte_order_cost, completed_order_id
             from %i completed
             join %i child_order on completed.id = child_order.parent_order_id
             and completed.parent_order_id = 0
@@ -67,7 +67,7 @@ function getPayoutRecords($data){
             where child_order.date_created_gmt >= %s
             and child_order.date_created_gmt <= %s
         )
-        select users.display_name, line_total.meta_value as total_revenue, stripe_fee as stripe_fees, cte1_percent_order_cost
+        select users.display_name, line_total.meta_value as total_revenue, stripe_fee as stripe_fees, cte1_percent_order_cost, cte_order_cost, completed_order_id
         from %i completed
         join %i child_order on completed.id = child_order.parent_order_id
         and completed.parent_order_id = 0
