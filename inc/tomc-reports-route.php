@@ -29,7 +29,7 @@ function getPayoutRecords($data){
             join %i child_order on completed.id = child_order.parent_order_id
             and completed.parent_order_id = 0
             and completed.status = "wc-completed"
-            join %i items on child_order.id = items.order_id
+            join %i items on completed.id = items.order_id
             and items.order_item_type = "line_item"
             join %i line_total on items.order_item_id = line_total.order_item_id
             and line_total.meta_key = "_line_total"
@@ -66,7 +66,7 @@ function getPayoutRecords($data){
             where child_order.date_created_gmt >= %s
             and child_order.date_created_gmt <= %s
         )
-        select users.display_name, line_total.meta_value as total_revenue, stripe_fee as stripe_fees, cte1_percent_order_cost, cte_order_cost, completed_order_id
+        select users.display_name, sum(line_total.meta_value) as total_revenue, sum(stripe_fee) as stripe_fees, sum((line_total.meta_value - stripe_fee) * (um.meta_value/100)) as commission
         from %i completed
         join %i child_order on completed.id = child_order.parent_order_id
         and completed.parent_order_id = 0
@@ -90,7 +90,6 @@ function getPayoutRecords($data){
         // $results = $wpdb->get_results($wpdb->prepare($query, $orders_table, $order_items_table, $order_product_lookup_table, $posts_table, $users_table, $item_meta_table, $order_meta_table, $user_meta_table, $startDate, $endDate), ARRAY_A);
         $results = $wpdb->get_results($wpdb->prepare($query, $orders_table, $orders_table, $order_items_table, $item_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $item_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $item_meta_table, $order_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $order_product_lookup_table, $posts_table, $users_table, $item_meta_table, $item_meta_table, $user_meta_table, $startDate, $endDate), ARRAY_A);
         // return $results;
-        //select users.display_name, sum(line_total.meta_value) as total_revenue, sum(stripe_fee) as stripe_fees, sum((line_total.meta_value - stripe_fee) * (um.meta_value/100)) as commission
         return $wpdb->prepare($query, $orders_table, $orders_table, $order_items_table, $item_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $item_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $item_meta_table, $order_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $order_product_lookup_table, $posts_table, $users_table, $item_meta_table, $item_meta_table, $user_meta_table, $startDate, $endDate);
     } else {
         wp_safe_redirect(site_url('/my-account'));
