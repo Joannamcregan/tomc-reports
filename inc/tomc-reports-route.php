@@ -29,7 +29,7 @@ function getPayoutRecords($data){
             join %i child_order on completed.id = child_order.parent_order_id
             and completed.parent_order_id = 0
             and completed.status = "wc-completed"
-            join %i items on completed.id = items.order_id
+            join %i items on child_order.id = items.order_id
             and items.order_item_type = "line_item"
             join %i line_total on items.order_item_id = line_total.order_item_id
             and line_total.meta_key = "_line_total"
