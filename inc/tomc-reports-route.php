@@ -89,8 +89,8 @@ function getPayoutRecords($data){
         group by users.display_name;';
         // $results = $wpdb->get_results($wpdb->prepare($query, $orders_table, $order_items_table, $order_product_lookup_table, $posts_table, $users_table, $item_meta_table, $order_meta_table, $user_meta_table, $startDate, $endDate), ARRAY_A);
         $results = $wpdb->get_results($wpdb->prepare($query, $orders_table, $orders_table, $order_items_table, $item_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $item_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $item_meta_table, $order_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $order_product_lookup_table, $posts_table, $users_table, $item_meta_table, $item_meta_table, $user_meta_table, $startDate, $endDate), ARRAY_A);
-        // return $results;
-        return $wpdb->prepare($query, $orders_table, $orders_table, $order_items_table, $item_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $item_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $item_meta_table, $order_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $order_product_lookup_table, $posts_table, $users_table, $item_meta_table, $item_meta_table, $user_meta_table, $startDate, $endDate);
+        return $results;
+        // return $wpdb->prepare($query, $orders_table, $orders_table, $order_items_table, $item_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $item_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $item_meta_table, $order_meta_table, $startDate, $endDate, $orders_table, $orders_table, $order_items_table, $order_product_lookup_table, $posts_table, $users_table, $item_meta_table, $item_meta_table, $user_meta_table, $startDate, $endDate);
     } else {
         wp_safe_redirect(site_url('/my-account'));
         return 'fail';
