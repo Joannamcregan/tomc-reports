@@ -30,6 +30,7 @@ class PayoutReport {
     this.generateButton.on('click', this.generate.bind(this));
   }
   generate(e) {
+    console.log('called generate');
     let startDate = this.startDate.val();
     let endDate = this.endDate.val();
     if (startDate != '' && endDate != '') {
@@ -38,17 +39,19 @@ class PayoutReport {
       if (endDate > startDate) {
         this.dateOrderError.addClass('hidden');
         jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
+        console.log('in the if');
         jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
           beforeSend: xhr => {
-            xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+            xhr.setRequestHeader('X-WP-Nonce', tomcReportsData.nonce);
           },
-          url: tomcBookorgData.root_url + '/wp-json/tomcReports/v1/getPayoutRecords',
+          url: tomcReportsData.root_url + '/wp-json/tomcReports/v1/getPayoutRecords',
           type: 'GET',
           data: {
             'startDate': startDate,
             'endDate': endDate
           },
           success: response => {
+            console.log(response);
             this.resultsSection.html('');
             jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
             let table = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<table />');
@@ -85,6 +88,7 @@ class PayoutReport {
             this.resultsSection.append(table);
           },
           error: response => {
+            console.log(response);
             this.resultsSection.html('');
             let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />');
             p.text('Unfortunately an error occurred. Please try again later.');
