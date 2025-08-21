@@ -12,18 +12,13 @@ require_once plugin_dir_path(__FILE__) . 'inc/tomc-reports-route.php';
 class TOMCReportsPlugin {
     function __construct() {
         add_action('activate_tomc-reports/tomc-reports.php', array($this, 'onActivate'));
-        add_action('admin_init', array($this, 'registerScripts'));
         add_action('admin_enqueue_scripts', array($this, 'pluginFiles'));
         add_action( 'admin_menu', array($this, 'wpdocs_register_payout_report_tab') );
         add_filter('template_include', array($this, 'loadTemplate'), 99);
     }	
 
     function registerScripts(){
-        // wp_register_style('tomc_reports_styles', plugins_url('css/tomc-reports-styles.css', __FILE__), false, '1.0', 'all');
-        // wp_localize_script('tomc-reports-js', 'tomcReportsData', array(
-        //     'root_url' => esc_url_raw(rest_url()),        
-        //     'nonce' => wp_create_nonce('wp_rest')
-        // ));
+        wp_register_style('tomc_reports_styles', plugins_url('css/tomc-reports-styles.css', __FILE__), false, '1.0', 'all');
     }
 
     function pluginFiles(){
