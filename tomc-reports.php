@@ -12,6 +12,7 @@ require_once plugin_dir_path(__FILE__) . 'inc/tomc-reports-route.php';
 class TOMCReportsPlugin {
     function __construct() {
         add_action('activate_tomc-reports/tomc-reports.php', array($this, 'onActivate'));
+        add_action('admin_init', array($this, 'registerScripts'));
         add_action('admin_enqueue_scripts', array($this, 'pluginFiles'));
         add_action( 'admin_menu', array($this, 'wpdocs_register_payout_report_tab') );
         add_filter('template_include', array($this, 'loadTemplate'), 99);
@@ -77,7 +78,7 @@ function payout_report_tab(){
                 <p id="payout-report--start-date-error" class="hidden centered-text red-text">Choose a start date.</p>
                 <p id="payout-report--end-date-error" class="hidden centered-text red-text">Choose an end date.</p>
                 <p id="payout-report--dates-error" class="hidden centered-text red-text">The end date must be later than the start date.</p>
-                <button id="tomc-payout-report--generate-button" class="purple-width-fit-button">Generate</button>
+                <button id="tomc-payout-report--generate-button">Generate</button>
                 <div id="tomc-payout-report--results-section" class="tomc-report--result-section"></div>
             </div>
         </main>';

@@ -1,8 +1,6 @@
 .report-section input[type="date"]{
-    padding: 5px 10px;
-    border-radius: 20px;
-    display: block;
-    margin: 0px auto 20px auto;
+    padding: 3px 10px;
+    margin-right: 20px;
     cursor: pointer;
 }
 .tomc-report--result-section table{
@@ -13,4 +11,10 @@
 }
 .tomc-report--result-section td, .tomc-report--result-section th{
     border: 2px solid #4c0548 !important;
+}
+#tomc-payout-report--generate-button {
+    background: #4c0548;
+    color: white;
+    padding: 7px 15px;
+    border-radius: 20px;
 }
