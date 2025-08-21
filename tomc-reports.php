@@ -71,9 +71,9 @@ function payout_report_tab(){
 	echo '<main>
             <div class="report-section two-thirds-screen">
                 <h1 class="centered-text margin-20">Payout Report</h1>
-                <label for="payout-report--start-date" class="centered-text margin-20 block">start date: </label>
+                <label for="payout-report--start-date"><strong>start date: </strong></label>
                 <input type="date" id="payout-report--start-date" />
-                <label for="payout-report--end-date" class="centered-text margin-20 block">end date: </label>
+                <label for="payout-report--end-date"><strong>end date: </strong></label>
                 <input type="date" id="payout-report--end-date" />
                 <p id="payout-report--start-date-error" class="hidden centered-text red-text">Choose a start date.</p>
                 <p id="payout-report--end-date-error" class="hidden centered-text red-text">Choose an end date.</p>
